@@ -18,14 +18,17 @@ contract('CrowdSale', function(accounts) {
 
   async function assertPurchase(number, before, after){
     var success = true;
-    var price = 0;
+    var beforePrice = (await sale.getParticipant.call(accounts[number]))[0].toNumber();
+    var beforeBalance = (await sale.getParticipant.call(accounts[number]))[1].toNumber();
+    var increase = 0;
     console.log(number, before, after);
     assert.equal((await sale.getPrice.call()).toNumber(), before);
-    await sale.buy({from:accounts[number]}).catch(()=>{ success = false });
+    await sale.buy({from:accounts[number], value:before}).catch(()=>{ success = false });
     if(success){
-      price = before;
+      increase = before;
     }
-    assert.equal((await sale.getParticipant.call(accounts[number]))[0].toNumber(), price);
+    assert.equal((await sale.getParticipant.call(accounts[number]))[0].toNumber(), beforePrice + increase);
+    assert.equal((await sale.getParticipant.call(accounts[number]))[1].toNumber(), beforePrice + increase);
     assert.equal((await sale.getPrice.call()).toNumber(), after);
     return success;
   }
@@ -42,5 +45,10 @@ contract('CrowdSale', function(accounts) {
     assert.equal(await assertPurchase(9, 70, 60), true);
     assert.equal(await assertPurchase(10, 60, 60), true);
     assert.equal(await assertPurchase(11, 60, 60), false);
+  });
+
+  it("no duplicate purchase", async function() {
+    assert.equal(await assertPurchase(1, 120, 120), true);
+    assert.equal(await assertPurchase(1, 120, 120), false);
   });
 });

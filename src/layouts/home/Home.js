@@ -1,60 +1,40 @@
 import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
-import logo from '../../logo.png'
 
 class Home extends Component {
   render() {
     return (
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1 header">
-            <img src={logo} alt="drizzle-logo" />
-            <h1>Drizzle Examples</h1>
-            <p>Examples of how to get started with Drizzle in various situations.</p>
+      <div className="pure-u-1-1">
+        <h2>Turn your ticket buyers to event ambassador!</h2>
 
-            <br/><br/>
-          </div>
-        
-          <div className="pure-u-1-1">
-            <h2>Active Account</h2>
-            <AccountData accountIndex="0" units="ether" precision="3" />
+        <h2 id="introduction">Introduction</h2>
 
-            <br/><br/>
-          </div>
+        <p>
+          For any live event ticketing, filling the full capacity of the venue is crtitical part of their business yet pricing options have been limited to simple models such as "early bird discounts" or slashing the ticket price towards the end of the sale.
+        </p>
 
-          <div className="pure-u-1-1">
-            <h2>SimpleStorage</h2>
-            <p>This shows a simple ContractData component with no arguments, along with a form to set its value.</p>
-            <p><strong>Stored Value</strong>: <ContractData contract="SimpleStorage" method="storedData" /></p>
-            <ContractForm contract="SimpleStorage" method="set" />
+        <p>
+          With the programmable money powered by Ethereum smart contract, we can provide more attractive pricing model which incentivse ticket buyers to coordinate together to fill the venue while minimising the risk of loss for event organisers.
+        </p>
 
-            <br/><br/>
-          </div>
+        <h2 id="introduction">Why dutch auction?</h2>
 
-          <div className="pure-u-1-1">
-            <h2>TutorialToken</h2>
-            <p>Here we have a form with custom, friendly labels. Also note the token symbol will not display a loading indicator. We've suppressed it with the <code>hideIndicator</code> prop because we know this variable is constant.</p>
-            <p><strong>Total Supply</strong>: <ContractData contract="TutorialToken" method="totalSupply" methodArgs={[{from: this.props.accounts[0]}]} /> <ContractData contract="TutorialToken" method="symbol" hideIndicator /></p>
-            <p><strong>My Balance</strong>: <ContractData contract="TutorialToken" method="balanceOf" methodArgs={[this.props.accounts[0]]} /></p>
-            <h3>Send Tokens</h3>
-            <ContractForm contract="TutorialToken" method="transfer" labels={['To Address', 'Amount to Send']} />
+        <p>
+          A Dutch auction is one of auction models in which the auctioneer begins with a high asking price, and lowers it until some participant accepts the price. This auction model was introduced by a few well known ICO such as Gnosis or Polkadot.
+        </p>
 
-            <br/><br/>
-          </div>
-
-          <div className="pure-u-1-1">
-            <h2>ComplexStorage</h2>
-            <p>Finally this contract shows data types with additional considerations. Note in the code the strings below are converted from bytes to UTF-8 strings and the device data struct is iterated as a list.</p>
-            <p><strong>String 1</strong>: <ContractData contract="ComplexStorage" method="string1" toUtf8 /></p>
-            <p><strong>String 2</strong>: <ContractData contract="ComplexStorage" method="string2" toUtf8 /></p>
-            <strong>Single Device Data</strong>: <ContractData contract="ComplexStorage" method="singleDD" />
-
-            <br/><br/>
-          </div>
-        </div>
-      </main>
+        <h2 id="introduction">Why cooperative?</h2>
+        <p>
+          Unlike Gnosis or Polkadot ICO where bidding price goes down according to time, We propose the pricing model where price deceases based on the number of tickets sold (as opposed to time). This will incentivise buyers(= fans) to spread the words and encourage others to buy the tickets to lower down their own ticket price.
+        </p>
+        <iframe src="https://makoto.github.io/dutch/" width="100%" height="650px"></iframe>
+        <h2 id="introduction">Summary</h2>
+        <p>
+          The traditional pricing model (early bird/slashing) are based on information asynmetry where seller don't reveal the current demand/supply and using FOMO (Fear of missing out) tactic to the buyers. By making demand/supply data transparent using blockchain and make pricing dynamic using smart contract, both sellers and buyers are incentivised to sell more tickets together.
+        </p>
+        <a href="/demo" className="pure-button demo-cta">Got it. Take me to demo page!</a>
+      </div>
     )
   }
 }
-
 export default Home

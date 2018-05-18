@@ -6,7 +6,12 @@ body,
 }
 
 .header {
+  background-color:orange;
   text-align: center;
+}
+.header a{
+  color:white;
+  text-decoration: none;
 }
 
 h1, h2, h3 {
@@ -22,9 +27,18 @@ code {
 .container {
   box-sizing: border-box;
   width: calc(100% - 60px);
-  max-width: 600px;
-  padding: 45px 20px;
+  /* padding: 45px 20px; */
   margin: 0 auto;
+  /* text-align: center; */
+}
+
+.demo-cta{
+  text-align: center;
+  display:block;
+  padding:10px;
+  font-size: larger;
+  background-color:green;
+  color:white;
 }
 
 .pure-button-primary {

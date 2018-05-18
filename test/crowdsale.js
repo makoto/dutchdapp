@@ -3,6 +3,10 @@ var CrowdSale = artifacts.require("./CrowdSale.sol");
 contract('CrowdSale', function(accounts) {
   let owner = accounts[0];
   let sale;
+  let title = 'Nice event';
+  let location = 'London';
+  let startTime = Date.now();
+  let endTime = Date.now(100000);
 
   async function assertPurchase(number, before, after){
     var success = true;
@@ -11,7 +15,7 @@ contract('CrowdSale', function(accounts) {
     var increase = 0;
     console.log(number, before, after);
     assert.equal((await sale.getPrice.call()).toNumber(), before);
-    await sale.buy({from:accounts[number], value:before}).catch(()=>{ success = false });
+    await sale.buy(accounts[number], {from:accounts[number], value:before}).catch(()=>{ success = false });
     if(success){
       increase = before;
     }
@@ -23,7 +27,7 @@ contract('CrowdSale', function(accounts) {
 
   describe('buying', function(){
     beforeEach(async function(){
-      sale = await CrowdSale.new(120, 60, 10, 4, {from:owner});
+      sale = await CrowdSale.new(owner, title, location, startTime, endTime, 120, 60, 10, 4, {from:owner});
     })
   
     it("sets config", async function() {
@@ -60,7 +64,7 @@ contract('CrowdSale', function(accounts) {
     let beforeBalance = [];
     let afterBalance = [];
     beforeEach(async function(){
-      sale = await CrowdSale.new(startPrice, 100, 4, 2, {from:owner});
+      sale = await CrowdSale.new(owner, title, location, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
       assert.equal(await assertPurchase(1, 120, 120), true);
       assert.equal(await assertPurchase(2, 120, 110), true);
       assert.equal(await assertPurchase(3, 110, 100), true);

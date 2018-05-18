@@ -1,6 +1,10 @@
 pragma solidity ^0.4.18;
 
 contract CrowdSale {
+    string public title;
+    string public location;
+    uint public startTime;
+    uint public endTime;
     uint public startPrice;
     uint public targetPrice;
     uint public cap;
@@ -23,22 +27,27 @@ contract CrowdSale {
         Canceled
     }
 
-    event Bought(uint deposit);
+    event Bought(string name, uint deposit);
     event Finalised();
     event Canceled();
     event Withdrawn(address account, uint amount);
   // Given start_price is $120, target_price is $60, capacity is 10, and threashold 
-  function CrowdSale(uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
+
+  constructor(address ownerAddress, string _title, string _location, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
     require(_startPrice > _targetPrice);
     require(_cap > _threshold);
+    title = _title;
+    location = _location;
+    startTime = _startTime;
+    endTime = _endTime;
     startPrice = _startPrice;
     targetPrice = _targetPrice;
     cap = _cap;
     threshold = _threshold;
-    owner = msg.sender;
+    owner = ownerAddress;
   }
   
-  function buy() public payable {
+  function buy(string name) public payable {
     require(participants[msg.sender].price == 0);
     require(!end);
     require(participantsIndex.length < cap);
@@ -46,7 +55,7 @@ contract CrowdSale {
     require(deposit == msg.value);
     participantsIndex.push(msg.sender);
     participants[msg.sender] = Participant(msg.sender, deposit, deposit);
-    emit Bought(deposit);
+    emit Bought(name, deposit);
   }
 
   // change send to true

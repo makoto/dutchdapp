@@ -5,13 +5,13 @@ module.exports = {
       host: "localhost",
       port: 8545,
       network_id: "*" // Match any network id
+    },
+    test: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*",
+      gasPrice: 0x01
     }
-  },
-  test: {
-    host: "localhost",
-    port: 8545,
-    network_id: "*",
-    gasPrice: 0x01
   },
   solc: {
     optimizer: {

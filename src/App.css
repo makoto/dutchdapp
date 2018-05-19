@@ -4,6 +4,24 @@ body,
 .pure-g [class*=pure-u] {
   font-family: 'Open Sans', sans-serif;
 }
+.buy{
+  width:100%;
+  background-color:#e6ecf0;
+  /* background-color:orange; */
+  border-radius: 5%;
+}
+.buy-cta{
+  display:inline;
+  float:right;
+  margin-top:5px;
+  margin-right:5px;
+  background-color:green;
+  color:white;
+}
+.buy input.buy-input{
+  display:inline;
+  margin-left:3px;
+}  
 
 .header {
   background-color:orange;

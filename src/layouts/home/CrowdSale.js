@@ -3,6 +3,7 @@ import { AccountData, ContractData, ContractForm } from 'drizzle-react-component
 import MakotoContractForm from './MakotoContractForm'
 import { drizzleConnect } from 'drizzle-react'
 import PropTypes from 'prop-types'
+import PriceChart from './PriceChart'
 
 // May still need this even with data function to refresh component on updates for this contract.
 const mapStateToProps = state => {
@@ -72,8 +73,8 @@ class CrowdSale extends Component {
         <div className="pure-u-1-1">
           <div className="main pure-u-2-3">
             <h2>Price info</h2>
+            <PriceChart />
             <ul>
-              {/* <li>{storedData}</li> */}
               <li>{numParticipants} participated</li>
               <li>ETH: {startPrice}</li>
               <li>target: <ContractData contract="CrowdSale" method="targetPrice" /></li>
@@ -88,18 +89,19 @@ class CrowdSale extends Component {
             <p>
               You currently have <AccountData accountIndex="0" units="ether" precision="3" />
             </p>
-            <MakotoContractForm
-              contract="CrowdSale" method="buy" buttonLabel="Buy" labels={['Type your Twitter name']}
-              options ={options}
-            />
-
           </div>
-          <div className="side pure-u-1-3">
+          <div className="side pure-u-1-3">            
+            <h2>Action</h2>
+            <MakotoContractForm className="buy"
+                contract="CrowdSale" method="buy" buttonLabel="Buy Now" labels={['You Twitter name']}
+                options ={options}
+              />
+
             <h2>Activity</h2>
             <ul>
                 <li className="participant"><img className="avatar" src="https://avatars.io/twitter/chrisbrown"></img> <a href="http://twitter.com/@chrisbrown">@chrisbrown</a>bought ticket at ETH </li>
                 <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a>bought ticket at ETH </li>
-                {this.props.CrowdSale.events.reverse().map((input, index) => {
+                {this.props.CrowdSale.events.map((input, index) => {
                   // input.returnValues._message
                   return (
                     <li className="participant">

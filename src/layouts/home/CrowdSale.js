@@ -36,7 +36,7 @@ class CrowdSale extends Component {
   }
 
   render() {
-    let title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold;
+    let title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold, delta;
 
     if(this.props.CrowdSale.title[this.dataKeyTitle]){
       title = this.props.CrowdSale.title[this.dataKeyTitle].value;
@@ -48,6 +48,7 @@ class CrowdSale extends Component {
       targetPrice = this.web3.utils.fromWei(this.props.CrowdSale.targetPrice[this.dataKeyTitle].value, 'ether');
       cap = this.props.CrowdSale.cap[this.dataKeyTitle].value;
       threshold = this.props.CrowdSale.threshold[this.dataKeyTitle].value;
+      delta = (parseInt(startPrice) - parseInt(targetPrice)) / (parseInt(cap) - parseInt(threshold));
     }
     console.log('title', title)
     let options = {
@@ -68,7 +69,7 @@ class CrowdSale extends Component {
           <div className="main pure-u-2-3">
             <h2>Ticket price info</h2>
             <p>
-              Currently {numParticipants} committed to join the event at the price of ETH {currentPrice}.
+              Currently {numParticipants} committed to join the event at the price of ETH {parseInt(currentPrice) + delta}.
               <br/>
               If another {cap - numParticipants} people also commits, the ticke price goes down to ETH {targetPrice}.
             </p>

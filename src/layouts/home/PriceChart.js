@@ -37,7 +37,7 @@ export default function PriceChart(data) {
     <Chart
       config={{
         transition: {
-            duration: 0
+            duration: 100
         },
         size: {
             height: 240,

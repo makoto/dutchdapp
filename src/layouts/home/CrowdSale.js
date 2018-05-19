@@ -40,7 +40,6 @@ class CrowdSale extends Component {
   render() {
     let title, numParticipants, startPrice, value;
     if(this.props.CrowdSale.title[this.dataKeynumParticipants]){
-      // console.log('this.props.CrowdSale.title', this.props.CrowdSale.title[this.dataKey].value);
       numParticipants = this.props.CrowdSale.numParticipants[this.dataKeynumParticipants].value;
       startPrice = this.web3.utils.fromWei(this.props.CrowdSale.startPrice[this.dataKeynumParticipants].value, 'ether');
       value = this.props.CrowdSale.getPrice[this.dataKeynumParticipants].value;
@@ -99,8 +98,8 @@ class CrowdSale extends Component {
 
             <h2>Activity</h2>
             <ul>
-                <li className="participant"><img className="avatar" src="https://avatars.io/twitter/chrisbrown"></img> <a href="http://twitter.com/@chrisbrown">@chrisbrown</a>bought ticket at ETH </li>
-                <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a>bought ticket at ETH </li>
+                {/* <li className="participant"><img className="avatar" src="https://avatars.io/twitter/chrisbrown"></img> <a href="http://twitter.com/@chrisbrown">@chrisbrown</a>bought ticket at ETH </li>
+                <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a>bought ticket at ETH </li> */}
                 {this.props.CrowdSale.events.map((input, index) => {
                   // input.returnValues._message
                   return (

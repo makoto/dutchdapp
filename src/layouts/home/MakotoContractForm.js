@@ -85,7 +85,6 @@ class MakotoContractForm extends Component {
             // check if input type is struct and if so loop out struct fields as well
             return (<input key={input.name} type={inputType} name={input.name} value={this.state[input.name]} placeholder={inputLabel} onChange={this.handleInputChange} />)
         })}
-
         <button key="submit" className="pure-button-primary" type="button" onClick={this.handleSubmit}>{buttonLabel}</button>
       </form>
     )

@@ -57,14 +57,20 @@ class CrowdSale extends Component {
     // var storedData = this.props.drizzleStatus.initialized ? this.contracts.SimpleStorage.methods.storedData.data() : 'Loading...'
     // var storedData = this.props.drizzleStatus.initialized ? this.contracts.SimpleStorage.methods.storedData.data() : 'Loading...'
     return (
+      <div>
+        <div className="pure-u-1-1 header miami">
+          <h1>
+          <img className="avatar" src="https://avatars.io/twitter/pitbull"></img>
+          <ContractData contract="CrowdSale" method="title" />
+          in 
+          <ContractData contract="CrowdSale" method="location" />
+          </h1>
+        </div>
+        <main className="container">
+        <div className="pure-g">
+
         <div className="pure-u-1-1">
           <div className="main pure-u-2-3">
-            <h1>Tour:
-              <ContractData contract="CrowdSale" method="title" />
-              in 
-              <ContractData contract="CrowdSale" method="location" />
-              <ContractData contract="CrowdSale" method="endTime" />
-            </h1>
             <h2>Price info</h2>
             <ul>
               {/* <li>{storedData}</li> */}
@@ -108,6 +114,12 @@ class CrowdSale extends Component {
           </div>
         </div>
 
+
+
+        </div>
+      </main>
+
+      </div>
     )
   }
 }

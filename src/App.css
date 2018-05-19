@@ -17,6 +17,10 @@ body,
 h1, h2, h3 {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
+.miami{
+  background-image:url("https://halloweenhalfmarathon.com/wp-content/uploads/2013/06/header-miami-travel.jpg");
+  height:200px;
+}
 
 code {
   padding: .25rem;

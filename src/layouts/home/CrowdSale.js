@@ -72,7 +72,9 @@ class CrowdSale extends Component {
               <br/>
               If another {cap - numParticipants} people also commits, the ticke price goes down to ETH {targetPrice}.
             </p>
-            <PriceChart />
+            <PriceChart
+              data={[startPrice, targetPrice, currentPrice, numParticipants, threshold, cap]}
+            />
           </div>
           <div className="side pure-u-1-3">            
             <h2>Action</h2>

@@ -2,8 +2,38 @@ import React, { Component } from 'react'
 import Chart from 'react-c3-component';
 import 'c3/c3.css';
  
-export default function PriceChart() {
-  return (
+export default function PriceChart(data) {
+    data = data.data.map((d)=>{ return parseInt(d)});
+    let startPrice = data[0];
+    let targetPrice = data[1];
+    let currentPrice = data[2];
+    let numParticipants = data[3];
+    let threshold = data[4];
+    let cap = data[5];
+    let current_achivement = [];
+    let price_points = [];
+    let delta = (startPrice - targetPrice) / (cap - threshold);
+    for(var i=0; i<numParticipants; i++){
+        if(numParticipants < threshold){
+            current_achivement.push(currentPrice);
+        }else{
+            current_achivement.push(currentPrice + delta);
+        }
+    }
+    for(i=1; i<=cap; i++){
+        if(i<threshold){
+            price_points.push(startPrice);
+        }else{
+            let price_point = startPrice - (delta * (i - threshold));
+            price_points.push(price_point);
+        }
+    }
+    price_points.unshift('price points');
+    current_achivement.unshift('current achivement');
+    console.log('current_achivement', current_achivement);
+    console.log('price_points', price_points);
+
+    return (
     <Chart
       config={{
         transition: {
@@ -15,11 +45,11 @@ export default function PriceChart() {
         },
         data: {
             columns: [
-                ['price points', 120,120,110,100,90,80,70,60],
-                ['current achivement', 90,90,90,90,90]
+                price_points,
+                current_achivement
             ],
             types: {
-                'max price'         : 'area',
+                // 'max price'         : 'area',
                 'current achivement': 'area-step'
             }
         },
@@ -31,8 +61,8 @@ export default function PriceChart() {
                 },
             },
             y: {
-                max: 120,
-                min: 60,
+                max: startPrice,
+                min: targetPrice,
                 // padding: {top: 120, bottom: 50},
                 label: {
                     text: 'Ticket price',

@@ -24,46 +24,41 @@ class CrowdSale extends Component {
     this.web3 = context.drizzle.web3;
     if (this.props.drizzleStatus.initialized) {
       this.dataKeyTitle = this.contracts.CrowdSale.methods.title.cacheCall()
+      this.contracts.CrowdSale.methods.title.cacheCall()
+      this.contracts.CrowdSale.methods.location.cacheCall()
       this.contracts.CrowdSale.methods.startPrice.cacheCall()
       this.contracts.CrowdSale.methods.getPrice.cacheCall()
       this.dataKeynumParticipants = this.contracts.CrowdSale.methods.numParticipants.cacheCall()
-        // Use the dataKey to display data from the store.
-        console.log('keys', this.dataKeyTitle, this.dataKeynumParticipants);
-
-        // return state.contracts.SimpleStorage.methods.storedData[dataKey].value
-      console.log('CONStRUCTOR INITIALIZED')
-    }else{
-      console.log('CONStRUCTOR NOT INITIALIZED')
+      this.contracts.CrowdSale.methods.targetPrice.cacheCall()
+      this.contracts.CrowdSale.methods.cap.cacheCall()
+      this.contracts.CrowdSale.methods.threshold.cacheCall()
     }
   }
 
   render() {
-    let title, numParticipants, startPrice, value;
-    if(this.props.CrowdSale.title[this.dataKeynumParticipants]){
-      numParticipants = this.props.CrowdSale.numParticipants[this.dataKeynumParticipants].value;
-      startPrice = this.web3.utils.fromWei(this.props.CrowdSale.startPrice[this.dataKeynumParticipants].value, 'ether');
-      value = this.props.CrowdSale.getPrice[this.dataKeynumParticipants].value;
-      console.log('events1', this.props.SimpleStorage.events);
-      console.log('events2', this.props.CrowdSale.events);
+    let title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold;
+
+    if(this.props.CrowdSale.title[this.dataKeyTitle]){
+      title = this.props.CrowdSale.title[this.dataKeyTitle].value;
+      venue = this.props.CrowdSale.location[this.dataKeyTitle].value;
+      numParticipants = this.props.CrowdSale.numParticipants[this.dataKeyTitle].value;
+      startPrice = this.web3.utils.fromWei(this.props.CrowdSale.startPrice[this.dataKeyTitle].value, 'ether');
+      value = this.props.CrowdSale.getPrice[this.dataKeyTitle].value;
+      currentPrice = this.web3.utils.fromWei(value, 'ether'); 
+      targetPrice = this.web3.utils.fromWei(this.props.CrowdSale.targetPrice[this.dataKeyTitle].value, 'ether');
+      cap = this.props.CrowdSale.cap[this.dataKeyTitle].value;
+      threshold = this.props.CrowdSale.threshold[this.dataKeyTitle].value;
     }
+    console.log('title', title)
     let options = {
       value: value
-      // this.web3.utils.toWei('0.02','ether')
     }
-
-    // console.log('this.contracts.SimpleStorage.methods.storedData', this.contracts.SimpleStorage.methods.storedData)
-    // this.contracts.SimpleStorage.methods.storedData().call().then((r)=>{console.log('data', r)})
-    // var storedData = this.contracts.SimpleStorage.methods.storedData().call().then((r)=>{console.log('data', r)})
-    // var storedData = this.props.drizzleStatus.initialized ? this.contracts.SimpleStorage.methods.storedData.data() : 'Loading...'
-    // var storedData = this.props.drizzleStatus.initialized ? this.contracts.SimpleStorage.methods.storedData.data() : 'Loading...'
     return (
       <div>
         <div className="pure-u-1-1 header miami">
           <h1>
           <img className="avatar" src="https://avatars.io/twitter/pitbull"></img>
-          <ContractData contract="CrowdSale" method="title" />
-          in 
-          <ContractData contract="CrowdSale" method="location" />
+          {title} in {venue}
           </h1>
         </div>
         <main className="container">
@@ -71,23 +66,13 @@ class CrowdSale extends Component {
 
         <div className="pure-u-1-1">
           <div className="main pure-u-2-3">
-            <h2>Price info</h2>
-            <PriceChart />
-            <ul>
-              <li>{numParticipants} participated</li>
-              <li>ETH: {startPrice}</li>
-              <li>target: <ContractData contract="CrowdSale" method="targetPrice" /></li>
-              <li>current price: <ContractData contract="CrowdSale" method="getPrice" /></li>
-              <li>participants: <ContractData contract="CrowdSale" method="numParticipants" /></li>
-              <li>cap: <ContractData contract="CrowdSale" method="cap" /></li>
-              <li>threshold: <ContractData contract="CrowdSale" method="threshold" /></li>
-            </ul>
-            <h2>
-              Ticket purchase
-            </h2>
+            <h2>Ticket price info</h2>
             <p>
-              You currently have <AccountData accountIndex="0" units="ether" precision="3" />
+              Currently {numParticipants} committed to join the event at the price of ETH {currentPrice}.
+              <br/>
+              If another {cap - numParticipants} people also commits, the ticke price goes down to ETH {targetPrice}.
             </p>
+            <PriceChart />
           </div>
           <div className="side pure-u-1-3">            
             <h2>Action</h2>

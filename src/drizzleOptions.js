@@ -1,6 +1,7 @@
 import ComplexStorage from './../build/contracts/ComplexStorage.json'
 import SimpleStorage from './../build/contracts/SimpleStorage.json'
 import TutorialToken from './../build/contracts/TutorialToken.json'
+import CrowdSale from './../build/contracts/CrowdSale.json'
 
 const drizzleOptions = {
   web3: {
@@ -13,10 +14,12 @@ const drizzleOptions = {
   contracts: [
     ComplexStorage,
     SimpleStorage,
-    TutorialToken
+    TutorialToken,
+    CrowdSale
   ],
   events: {
-    SimpleStorage: ['StorageSet']
+    SimpleStorage: ['StorageSet'],
+    CrowdSale: ['Bought'],
   },
   polls: {
     accounts: 1500

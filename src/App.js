@@ -5,7 +5,6 @@ import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
 import './App.css'
-import logo from './logo.png'
 
 class App extends Component {
   render() {

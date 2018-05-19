@@ -44,7 +44,11 @@ contract CrowdSale {
     targetPrice = _targetPrice;
     cap = _cap;
     threshold = _threshold;
-    owner = ownerAddress;
+    if (ownerAddress == 0x0) {
+       owner = ownerAddress;    
+    } else {
+        owner = msg.sender;
+    }
   }
   
   function buy(string name) public payable {

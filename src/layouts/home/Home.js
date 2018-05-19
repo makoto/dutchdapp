@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { AccountData, ContractData, ContractForm } from 'drizzle-react-components'
+import PropTypes from 'prop-types'
 
 class Home extends Component {
+  constructor(props, context) {
+    super(props);
+    this.contracts = context.drizzle.contracts
+  }
+
   render() {
     return (
       <div className="pure-u-1-1">
@@ -37,4 +43,9 @@ class Home extends Component {
     )
   }
 }
+
+Home.contextTypes = {
+  drizzle: PropTypes.object
+}
+
 export default Home

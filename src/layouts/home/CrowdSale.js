@@ -88,11 +88,11 @@ class CrowdSale extends Component {
             <ul>
                 {/* <li className="participant"><img className="avatar" src="https://avatars.io/twitter/chrisbrown"></img> <a href="http://twitter.com/@chrisbrown">@chrisbrown</a>bought ticket at ETH </li>
                 <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a>bought ticket at ETH </li> */}
-                {this.props.CrowdSale.events.map((input, index) => {
-                  // input.returnValues._message
+                {this.props.CrowdSale.events.sort((a,b)=>{return b.blockNumber-a.blockNumber }).map((input, index) => {
+                  console.log(input, index);
                   return (
                     <li className="participant">
-                      {index}
+                      {/* {input.blockNumber} */}
                       <img className="avatar" src={`https://avatars.io/twitter/${input.returnValues.name}`}></img>
                       <a href={`https://twitter.com/${input.returnValues.name}`}>{input.returnValues.name}</a>
                        bought ticket at {this.web3.utils.fromWei(input.returnValues.deposit)} ETH

@@ -8,7 +8,7 @@ module.exports =  async function(callback) {
     let participants = await sale.numParticipants.call()
     console.log('participants', participants.toNumber())
     for(i=1;i<10;i++){
-        await snooze(1000);
+        await snooze(2000);
         participants = await sale.numParticipants.call()
         price = await sale.getPrice.call()
         account = web3.eth.accounts[i];

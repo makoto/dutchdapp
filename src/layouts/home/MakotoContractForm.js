@@ -76,6 +76,10 @@ class MakotoContractForm extends Component {
 
   render() {
     var buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'Submit';
+    var message;
+    if(this.props.message){
+      message = (<div>{this.props.message}</div>)
+    }
 
     return (
       <form className="buy pure-form pure-form-stacked">
@@ -85,6 +89,7 @@ class MakotoContractForm extends Component {
             // check if input type is struct and if so loop out struct fields as well
             return (<input className="buy-input" key={input.name} type={inputType} name={input.name} value={this.state[input.name]} placeholder={inputLabel} onChange={this.handleInputChange} />)
         })}
+        {message}
         <button key="submit" className="pure-button buy-cta" type="button" onClick={this.handleSubmit}>{buttonLabel}</button>
       </form>
     )

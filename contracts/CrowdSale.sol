@@ -106,6 +106,24 @@ contract CrowdSale {
     return getPriceFor(participantsIndex.length);
   }
 
+
+  function getParticipantStatus(address participantAddress) view returns(uint){
+    Participant participant = participants[participantAddress];
+    if(participant.price > 0){
+      if(end){
+        if(participant.balance > 0){
+            return 2; // withdraw
+        }else{
+            return 3; // print out ticket
+        }
+      }else{
+        return 1; // share
+      }
+    }else{
+        return 0; // not registered
+    }
+  }
+
   function getPriceFor(uint num) public view returns(uint){
     if (participantsIndex.length == 0){
         return startPrice;

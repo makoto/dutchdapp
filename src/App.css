@@ -6,6 +6,7 @@ body,
 }
 .buy{
   width:100%;
+  padding:5px;
   background-color:#e6ecf0;
   /* background-color:orange; */
   border-radius: 5%;
@@ -64,6 +65,22 @@ code {
   margin: 0 auto;
   /* text-align: center; */
 }
+
+textarea.share-input{
+  height:100px;
+  width:98%;
+  margin:5px;
+}
+
+.share-cta{
+  text-align: center;
+  display:block;
+  padding:10px;
+  font-size: larger;
+  background-color:green;
+  color:white;
+}
+
 
 .demo-cta{
   text-align: center;

@@ -24,6 +24,14 @@ contract('CrowdSale', function(accounts) {
     assert.equal((await sale.getPrice.call()).toNumber(), after);
     return success;
   }
+  async function assertWithdraw(accountNumber, _, transfered){
+    const { logs } = await sale.withdraw({from:accounts[accountNumber]});
+    const event = logs.find((e) => {
+      return e.event === 'Withdrawn' && e.args.account === accounts[accountNumber]
+    });
+    assert.equal(event.args.amount.toNumber(), transfered);
+    return true;
+  }
 
   describe('buying', function(){
     beforeEach(async function(){
@@ -59,6 +67,21 @@ contract('CrowdSale', function(accounts) {
     });
   })
 
+  describe('userState', function(){
+    let startPrice = 120;
+    let user = accounts[1];
+    it("shows the state", async function() {
+      sale = await CrowdSale.new(owner, title, location, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
+      assert.equal(await sale.getParticipantStatus.call(user), 0);
+      assert.equal(await assertPurchase(1, 120, 120), true);
+      assert.equal(await sale.getParticipantStatus.call(user), 1);
+      await sale.finalize({from:owner});
+      assert.equal(await sale.getParticipantStatus.call(user), 2);
+      assert.equal(await assertWithdraw(1, 120, 0), true);
+      assert.equal(await sale.getParticipantStatus.call(user), 3);
+    });
+  });
+
   describe('payback', function(){
     let startPrice = 120;
     let beforeBalance = [];
@@ -70,15 +93,6 @@ contract('CrowdSale', function(accounts) {
       assert.equal(await assertPurchase(3, 110, 100), true);
       assert.equal(await assertPurchase(4, 100, 100), true);
     })
-
-    async function assertWithdraw(accountNumber, _, transfered){
-      const { logs } = await sale.withdraw({from:accounts[accountNumber]});
-      const event = logs.find((e) => {
-        return e.event === 'Withdrawn' && e.args.account === accounts[accountNumber]
-      });
-      assert.equal(event.args.amount.toNumber(), transfered);
-      return true;
-    }
 
     it("finalises", async function() {
       await sale.finalize({from:owner});

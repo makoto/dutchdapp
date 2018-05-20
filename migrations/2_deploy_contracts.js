@@ -8,5 +8,5 @@ module.exports = function(deployer) {
   deployer.deploy(SimpleStorage);
   deployer.deploy(TutorialToken);
   deployer.deploy(ComplexStorage);
-  deployer.deploy(CrowdSale, 0, '@paddyucl charity gig', 'Miami', Date.now(), Date.now(10000), startPrice, targetPrice, 10, 4);
+  deployer.deploy(CrowdSale, 0, '@pitbull charity gig', 'Miami', '@pitbull', Date.now(), Date.now(10000), startPrice, targetPrice, 10, 4);
 };

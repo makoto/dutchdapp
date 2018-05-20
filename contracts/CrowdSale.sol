@@ -3,6 +3,7 @@ pragma solidity ^0.4.18;
 contract CrowdSale {
     string public title;
     string public location;
+    string public ownerName;
     uint public startTime;
     uint public endTime;
     uint public startPrice;
@@ -34,11 +35,13 @@ contract CrowdSale {
     event Withdrawn(string name, address account, uint amount);
   // Given start_price is $120, target_price is $60, capacity is 10, and threashold 
 
-  constructor(address ownerAddress, string _title, string _location, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
+  constructor(address ownerAddress, string _title, string _location, string _ownerName, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
     require(_startPrice > _targetPrice);
     require(_cap > _threshold);
     title = _title;
     location = _location;
+    ownerName = _ownerName;
+    startTime = _startTime;
     startTime = _startTime;
     endTime = _endTime;
     startPrice = _startPrice;

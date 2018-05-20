@@ -26,6 +26,7 @@ class CrowdSale extends Component {
     this.web3 = context.drizzle.web3;
     if (this.props.drizzleStatus.initialized) {
       this.key_title = this.contracts.CrowdSale.methods.title.cacheCall()
+      this.key_ownerName = this.contracts.CrowdSale.methods.ownerName.cacheCall()
       this.key_location = this.contracts.CrowdSale.methods.location.cacheCall()
       this.key_startPrice = this.contracts.CrowdSale.methods.startPrice.cacheCall()
       this.key_getPrice = this.contracts.CrowdSale.methods.getPrice.cacheCall()
@@ -46,7 +47,7 @@ class CrowdSale extends Component {
   }
 
   render() {
-    let title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold, delta, message, participantStatus;
+    let owner_name, title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold, delta, message, participantStatus;
     participantStatus = 0;
     title = this.setKey('title');
     venue = this.setKey('location');
@@ -54,6 +55,7 @@ class CrowdSale extends Component {
     startPrice = this.web3.utils.fromWei(this.setKey('startPrice'), 'ether');
     targetPrice = this.web3.utils.fromWei(this.setKey('targetPrice'), 'ether');
     value = this.setKey('getPrice');
+    owner_name = this.setKey('ownerName');
     currentPrice = this.web3.utils.fromWei(value, 'ether');
     cap = this.setKey('cap');
     threshold = this.setKey('threshold');
@@ -66,7 +68,6 @@ class CrowdSale extends Component {
       value: value
     }
     let action;
-    let owner_name ="@pitbull";
 
     console.log('participantStatus', parseInt(participantStatus) == 0);
     // debugger;
@@ -92,11 +93,11 @@ class CrowdSale extends Component {
           action = (<Ticket />);
           break;
     }
-
+    console.log('owner_name', owner_name);
     return (
       <div>
         <div className="pure-u-1-1 header miami">
-          <h1>
+          <h1 className="title">
           <img className="avatar" src="https://avatars.io/twitter/pitbull"></img>
           {title} in {venue}
           </h1>

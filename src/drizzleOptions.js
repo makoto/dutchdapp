@@ -19,7 +19,7 @@ const drizzleOptions = {
   ],
   events: {
     SimpleStorage: ['StorageSet'],
-    CrowdSale: ['Bought'],
+    CrowdSale: ['Bought', 'Finalised', 'Canceled', 'Withdrawn'],
   },
   polls: {
     accounts: 1500

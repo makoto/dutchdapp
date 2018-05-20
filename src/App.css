@@ -57,6 +57,9 @@ code {
   margin:5px;
   border-radius: 5%;
 }
+.owner{
+  background-color: #ffd27f;
+}
 
 .container {
   box-sizing: border-box;

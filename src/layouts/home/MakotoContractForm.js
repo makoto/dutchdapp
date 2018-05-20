@@ -45,13 +45,10 @@ class MakotoContractForm extends Component {
 
     if(this.props.options){
         options = Object.assign(options, this.props.options);
+        this.contracts[this.props.contract].methods[this.props.method].cacheSend(this.state.name, options);
+    }else{
+        this.contracts[this.props.contract].methods[this.props.method].cacheSend();
     }
-    console.log('options', options)
-    const stackId = this.contracts[this.props.contract].methods[this.props.method].cacheSend(this.state.name, options);
-    // if (state.transactionStack[stackId]) {
-    //     const txHash = state.transactionStack[stackId]
-    //     return state.transactions[txHash].status
-    // }
   }
 
   handleInputChange(event) {

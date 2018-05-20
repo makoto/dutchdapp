@@ -33,6 +33,7 @@ class CrowdSale extends Component {
       this.key_targetPrice = this.contracts.CrowdSale.methods.targetPrice.cacheCall()
       this.key_cap = this.contracts.CrowdSale.methods.cap.cacheCall()
       this.key_threshold = this.contracts.CrowdSale.methods.threshold.cacheCall()
+      this.key_getParticipantStatus = this.contracts.CrowdSale.methods.getParticipantStatus.cacheCall(this.props.accounts[0])
     }
   }
 
@@ -45,7 +46,8 @@ class CrowdSale extends Component {
   }
 
   render() {
-    let title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold, delta, message;
+    let title, venue, numParticipants, startPrice, value, currentPrice, targetPrice, cap, threshold, delta, message, participantStatus;
+    participantStatus = 0;
     title = this.setKey('title');
     venue = this.setKey('location');
     numParticipants = this.setKey('numParticipants');
@@ -56,27 +58,41 @@ class CrowdSale extends Component {
     cap = this.setKey('cap');
     threshold = this.setKey('threshold');
     title = this.setKey('title');
+    participantStatus = parseInt(this.setKey('getParticipantStatus'));
     delta = (parseInt(startPrice) - parseInt(targetPrice)) / (parseInt(cap) - parseInt(threshold));
-    message = `Bought ${title} ticket at ETH ${currentPrice}. Let's all go together to make it ETH ${targetPrice}`
+    message = `Bought ${title} ticket at ETH ${currentPrice}. Let's all join together to make it ETH ${targetPrice}`;
 
-    // if(this.props.CrowdSale.title[this.dataKeyTitle]){
-    //   title = this.props.CrowdSale.title[this.dataKeyTitle].value;
-    //   venue = this.props.CrowdSale.location[this.dataKeyTitle].value;
-    //   numParticipants = this.props.CrowdSale.numParticipants[this.dataKeyTitle].value;
-    //   startPrice = this.web3.utils.fromWei(this.props.CrowdSale.startPrice[this.dataKeyTitle].value, 'ether');
-    //   value = this.props.CrowdSale.getPrice[this.dataKeyTitle].value;
-    //   currentPrice = this.web3.utils.fromWei(value, 'ether'); 
-    //   targetPrice = this.web3.utils.fromWei(this.props.CrowdSale.targetPrice[this.dataKeyTitle].value, 'ether');
-    //   cap = this.props.CrowdSale.cap[this.dataKeyTitle].value;
-    //   threshold = this.props.CrowdSale.threshold[this.dataKeyTitle].value;
-    //   delta = (parseInt(startPrice) - parseInt(targetPrice)) / (parseInt(cap) - parseInt(threshold));
-    //   // message = `Got ticket for ${title}`
-    // }
-    // message = title;
-    console.log('message', title, message)
     let options = {
       value: value
     }
+    let action;
+    let owner_name ="@pitbull";
+
+    console.log('participantStatus', parseInt(participantStatus) == 0);
+    // debugger;
+    switch (participantStatus) {
+      case 0:
+          action = (<MakotoContractForm className="buy"
+            contract="CrowdSale" method="buy" buttonLabel="Buy Now" labels={['@twitter_handle']}
+            options ={options}
+          />);
+          break;
+      case 1:
+          action = (<Tweet message={message} />);
+          break;
+      case 2:
+          action = (
+            <MakotoContractForm className="buy"
+              contract="CrowdSale" method="withdraw" buttonLabel="Give me!"
+              message="Sale is over. You can get ETH back"
+            />      
+          );
+          break;
+      case 3:
+          action = (<Ticket />);
+          break;
+    }
+
     return (
       <div>
         <div className="pure-u-1-1 header miami">
@@ -102,39 +118,54 @@ class CrowdSale extends Component {
           </div>
           <div className="side pure-u-1-3">            
             <h2>Action</h2>
-            <MakotoContractForm className="buy"
-                contract="CrowdSale" method="buy" buttonLabel="Buy Now" labels={['@twitter_handle']}
-                options ={options}
-              />
-            <Tweet message={message} />
-            <MakotoContractForm className="buy"
-                contract="CrowdSale" method="withdraw" buttonLabel="Give me!"
-                message="Sale is over. You can get ETH back"
-              />
-            <Ticket />
+            {action}
             <h2>Activity</h2>
             <ul>
-                {/* <li className="participant"><img className="avatar" src="https://avatars.io/twitter/chrisbrown"></img> <a href="http://twitter.com/@chrisbrown">@chrisbrown</a>bought ticket at ETH </li>
-                <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a>bought ticket at ETH </li> */}
-                {this.props.CrowdSale.events.sort((a,b)=>{return b.blockNumber-a.blockNumber }).map((input, index) => {
-                  console.log(input, index);
-                  return (
-                    <li className="participant">
+                {/* <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a><span>  bought ticket at <bold>4</bold> ETH</span> </li> */}
+                {/* <li className="participant">
                       <img className="avatar" src={`https://avatars.io/twitter/${input.returnValues.name}`}></img>
                       <a href={`https://twitter.com/${input.returnValues.name}`}>{input.returnValues.name}</a>
-                       bought ticket at {this.web3.utils.fromWei(input.returnValues.deposit)} ETH
-                    </li>
-                  )
+                        bought a ticket at <bold>{this.web3.utils.fromWei(input.returnValues.deposit)} ETH</bold>
+                    </li> */}
+
+                {this.props.CrowdSale.events.sort((a,b)=>{return b.blockNumber-a.blockNumber }).map((input, index) => {
+                  console.log(input, index);
+                  let activity;
+                    switch (input.event) {
+                      case 'Bought':
+                        activity = (<li className="participant">
+                                    <img className="avatar" src={`https://avatars.io/twitter/${input.returnValues.name}`}></img>
+                                    <a href={`https://twitter.com/${input.returnValues.name}`}>{input.returnValues.name}</a>
+                                    <span> bought a ticket at <bold>{this.web3.utils.fromWei(input.returnValues.deposit)} ETH</bold></span>
+                                  </li>
+                        );
+                        break;
+                      case 'Withdrawn':
+                        activity = (<li className="participant">
+                                    <img className="avatar" src={`https://avatars.io/twitter/${input.returnValues.name}`}></img>
+                                    <a href={`https://twitter.com/${input.returnValues.name}`}>{input.returnValues.name}</a>
+                                    <span>  got back <bold>{this.web3.utils.fromWei(input.returnValues.amount)} ETH</bold></span>
+                                  </li>
+                        );
+                        break;
+                      case 'Finalised':
+                        activity = (
+                          <li className="participant owner" >
+                          <img className="avatar" src={`https://avatars.io/twitter/${owner_name}`}></img>
+                              <a href={`https://twitter.com/${owner_name}`}>{owner_name}</a>
+                              <span>  the ticket sale is over! Looking forward to seeing you all!</span>
+                          </li>      
+                        );
+                        break;
+                    }
+                    return activity;
+                  // )
                 })}      
             </ul>
           </div>
         </div>
-
-
-
         </div>
       </main>
-
       </div>
     )
   }

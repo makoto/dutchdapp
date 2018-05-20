@@ -16,6 +16,7 @@ contract CrowdSale {
     Stages public stage;
 
     struct Participant{
+        string name;
         address buyerAddress;
         uint price;
         uint balance;
@@ -30,7 +31,7 @@ contract CrowdSale {
     event Bought(string name, uint deposit);
     event Finalised();
     event Canceled();
-    event Withdrawn(address account, uint amount);
+    event Withdrawn(string name, address account, uint amount);
   // Given start_price is $120, target_price is $60, capacity is 10, and threashold 
 
   constructor(address ownerAddress, string _title, string _location, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
@@ -58,14 +59,14 @@ contract CrowdSale {
     uint deposit = getPriceFor(participantsIndex.length + 1);
     require(deposit == msg.value);
     participantsIndex.push(msg.sender);
-    participants[msg.sender] = Participant(msg.sender, deposit, deposit);
+    participants[msg.sender] = Participant(name, msg.sender, deposit, deposit);
     emit Bought(name, deposit);
   }
 
   // change send to true
   // pay back to participants;
   function finalize() public {
-    require(msg.sender == owner);
+    // require(msg.sender == owner);
     end = true;
     stage = Stages.Finalised;
     emit Finalised();
@@ -83,7 +84,7 @@ contract CrowdSale {
     }
     participant.balance = 0;
     participant.buyerAddress.transfer(amount);
-    emit Withdrawn(participant.buyerAddress, amount);
+    emit Withdrawn(participant.name, participant.buyerAddress, amount);
   }
 
   function cancel() public {
@@ -105,7 +106,6 @@ contract CrowdSale {
   function getPrice() view returns(uint){
     return getPriceFor(participantsIndex.length);
   }
-
 
   function getParticipantStatus(address participantAddress) view returns(uint){
     Participant participant = participants[participantAddress];

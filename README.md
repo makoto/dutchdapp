@@ -1,35 +1,36 @@
 # Cooperative Dutch Auction
 
-## TODO
+Turn your ticket buyers to event ambassador
 
-### Factory
+## Introduciton
 
-- Takes cost, capacity, price and creates a crowdsale contract
+For any live event ticketing, filling the full capacity of the venue is crtitical part of their business yet pricing options have been limited to simple models such as "early bird discounts" or slashing the ticket price towards the end of the sale.
 
-### Test Scenario
+With the programmable money powered by Ethereum smart contract, we can provide more attractive pricing model which incentivse ticket buyers to coordinate together to fill the venue while minimising the risk of loss for event organisers.
 
-```
-Given start_price is $120, target_price is $60, capacity is 10, and threashold is 4
-And
-2 pays 120
-4 pays 120
-6 pays 100
-8 pays 80
-10 pays 60
-And Cap is reached.
-2 can withdraw 60
-4 can withdraw 60
-6 can withdraw 40
-8 can withdraw 20
-10 can withdraw 0
-```
+### Why dutch auction?
 
-## Admin feature
+A Dutch auction is one of auction models in which the auctioneer begins with a high asking price, and lowers it until some participant accepts the price. This auction model was introduced by a few well known ICO such as Gnosis or Polkadot.
 
-- finalize (payback the difference)
-- cancel   (payback everything)
+
+### Why cooperative?
+
+Unlike Gnosis or Polkadot ICO where bidding price goes down according to time, We propose the pricing model where price deceases based on the number of tickets sold (as opposed to time). This will incentivise buyers(= fans) to spread the words and encourage others to buy the tickets to lower down their own ticket price.
+
+### Summary
+
+The traditional pricing model (early bird/slashing) are based on information asynmetry where seller don't reveal the current demand/supply and using FOMO (Fear of missing out) tactic to the buyers. By making demand/supply data transparent using blockchain and make pricing dynamic using smart contract, both sellers and buyers are incentivised to sell more tickets together.
 
 ## Running Test
 
-1. Open `ganache -a 20`
-2. `truffle test`
+- Run `npm install`
+- Open `ganache -a 20` in separate terminal
+- Run `truffle test`
+
+## Running the simulation script.
+
+```truffle exec script/seed.js```
+
+## NOTES
+
+Due to bugs in drizzle, it has a problem showing activities on right bottom side when connecting via Metamask. To simulate the full capability, please connect without Metamask.

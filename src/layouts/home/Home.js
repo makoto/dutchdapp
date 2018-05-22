@@ -12,7 +12,7 @@ class Home extends Component {
     return (
       <div>
         <div className="pure-u-1-1 header">
-          <a href="/"><h1>Cooperative Dutch auction for live event ticketing</h1></a>
+          <a href="/"><h1 className="title">Cooperative Dutch auction for live event ticketing</h1></a>
         </div>
         <main className="container">
           <div className="pure-g">

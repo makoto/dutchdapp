@@ -11,8 +11,6 @@ import Ticket from './Ticket'
 const mapStateToProps = state => {
   return {
     accounts: state.accounts,
-    SimpleStorage: state.contracts.SimpleStorage,
-    TutorialToken: state.contracts.TutorialToken,
     CrowdSale: state.contracts.CrowdSale,
     drizzleStatus: state.drizzleStatus
   }
@@ -95,7 +93,7 @@ class CrowdSale extends Component {
     }
     console.log('owner_name', owner_name);
     return (
-      <div>
+      <div className="crowd-sale">
         <div className="pure-u-1-1 header miami">
           <h1 className="title">
           <img className="avatar" src="https://avatars.io/twitter/pitbull"></img>
@@ -121,7 +119,7 @@ class CrowdSale extends Component {
             <h2>Action</h2>
             {action}
             <h2>Activity</h2>
-            <ul>
+            <ul className="activity">
                 {/* <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a><span>  bought ticket at <bold>4</bold> ETH</span> </li> */}
                 {/* <li className="participant">
                       <img className="avatar" src={`https://avatars.io/twitter/${input.returnValues.name}`}></img>

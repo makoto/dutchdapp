@@ -1,12 +1,6 @@
-var SimpleStorage = artifacts.require("SimpleStorage");
-var TutorialToken = artifacts.require("TutorialToken");
-var ComplexStorage = artifacts.require("ComplexStorage");
 var CrowdSale = artifacts.require("CrowdSale");
-let startPrice = web3.toWei(12, 'ether');
-let targetPrice = web3.toWei(6, 'ether');
+let startPrice = web3.toWei(120, 'ether');
+let targetPrice = web3.toWei(60, 'ether');
 module.exports = function(deployer) {
-  deployer.deploy(SimpleStorage);
-  deployer.deploy(TutorialToken);
-  deployer.deploy(ComplexStorage);
-  deployer.deploy(CrowdSale, 0, '@pitbull charity gig', 'Miami', '@pitbull', Date.now(), Date.now(10000), startPrice, targetPrice, 10, 4);
+  deployer.deploy(CrowdSale, 0, '@pitbull charity gig', 'Moon', '@pitbull', Date.now(), Date.now(10000), startPrice, targetPrice, 10, 4);
 };

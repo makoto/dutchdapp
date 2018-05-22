@@ -24,7 +24,7 @@ The traditional pricing model (early bird/slashing) are based on information asy
 ## Running Test
 
 - Run `npm install`
-- Open `ganache -a 20` in separate terminal
+- Open `ganache-cli  -a 20 -e 1000` in separate terminal
 - Run `truffle test`
 
 ## Running the simulation script.
@@ -34,3 +34,15 @@ The traditional pricing model (early bird/slashing) are based on information asy
 ## NOTES
 
 Due to bugs in drizzle, it has a problem showing activities on right bottom side when connecting via Metamask. To simulate the full capability, please connect without Metamask.
+
+## Made with the following open source software.
+
+- [Ethereum Solidity](http://solidity.readthedocs.io/)
+- [Drizzle](https://github.com/trufflesuite/drizzle)
+- [Truffle](http://truffleframework.com)
+- [c3.js](http://c3js.org)
+
+## Other materials.
+
+- [header image of miami](https://pixabay.com/en/miami-florida-downtown-cityscape-936590/) = CC0 Creative Commons, Free for commercial use , No attribution required
+- Logo made with https://cooltext.com

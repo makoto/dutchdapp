@@ -10,6 +10,13 @@ h1.title{
   /* font-family: 'Poiret One', cursive; */
   /* font-family: 'Limelight', cursive; */
   color:white;
+  background-color:transparent;
+
+}
+
+*{
+  color:white;
+  background-color:#333;
 }
 
 .buy{
@@ -24,7 +31,7 @@ h1.title{
   float:right;
   margin-top:5px;
   margin-right:5px;
-  background-color:green;
+  background-color:#4CAF50;
   color:white;
 }
 .buy input.buy-input{
@@ -44,8 +51,10 @@ h1.title{
 h1, h2, h3 {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
+
 .miami{
-  background-image:url("../miami.png");
+  /* background-image:url("../miami.png"); */
+  background-image:url("../miami-936590_1280.jpg");   
   /* background-image:url("https://halloweenhalfmarathon.com/wp-content/uploads/2013/06/header-miami-travel.jpg"); */
   height:150px;
 }
@@ -64,8 +73,27 @@ code {
   padding:5px;
   margin:5px;
   border-radius: 5%;
+  color:black;
 }
-.owner{
+.participant *{
+  background-color:#e6ecf0;
+  color:black;
+}
+
+ul.activity{
+  background-color:#e6ecf0;
+  color:black;  
+  border-radius: 2%;
+}
+
+iframe, svg{
+  background-color:#e6ecf0;
+  border-radius:3%;
+}
+
+.activity a{ color:black;}
+
+.owner, .owner *{
   background-color: #ffd27f;
 }
 
@@ -78,6 +106,8 @@ code {
 }
 
 textarea.share-input{
+  background-color:white;
+  color:black;
   height:100px;
   width:98%;
   margin:5px;
@@ -88,8 +118,6 @@ textarea.share-input{
   display:block;
   padding:10px;
   font-size: larger;
-  background-color:green;
-  color:white;
 }
 
 
@@ -98,7 +126,7 @@ textarea.share-input{
   display:block;
   padding:10px;
   font-size: larger;
-  background-color:green;
+  background-color:#4CAF50;
   color:white;
 }
 
@@ -147,6 +175,10 @@ ul li:not(:last-child) {
   text-transform: none;
 }
 
+bold{
+  font-weight: bold;
+}
+
 .navbar .navbar-right {
   float: right;
 }
@@ -174,6 +206,12 @@ ul li:not(:last-child) {
 .pure-form {
   display: inline-block;
 }
+
+form div, form input{
+  background-color:#e6ecf0;
+  color:black;
+}
+
 
 /* ALERTS */
 

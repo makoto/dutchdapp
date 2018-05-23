@@ -112,6 +112,7 @@ class CrowdSale extends Component {
               If another {cap - numParticipants} people also commits, the ticke price goes down to ETH {targetPrice}.
             </p>
             <PriceChart
+              className="price-chart"
               data={[startPrice, targetPrice, currentPrice, numParticipants, threshold, cap]}
             />
           </div>
@@ -119,6 +120,20 @@ class CrowdSale extends Component {
             <h2>Action</h2>
             {action}
             <h2>Activity</h2>
+            {/* <ul className="activity">
+              <li className="participant owner">
+                <img className="avatar" src="https://avatars.io/twitter/@pitbull" />
+                <a href="https://twitter.com/@pitbull">@pitbull</a>
+                <span>  the ticket sale is over! Looking forward to seeing you all!</span>
+              </li>
+              <li className="participant">
+                <img className="avatar" src="https://avatars.io/twitter/@eordano" />
+                <a href="https://twitter.com/@eordano">@eordano</a>
+                <span>bought a ticket at
+                  <bold>dddd</bold>
+                </span>
+              </li>
+            </ul> */}
             <ul className="activity">
                 {/* <li className="participant"><img className="avatar" src="https://avatars.io/twitter/jlo"></img> <a href="http://twitter.com/@jlo">@jlo</a><span>  bought ticket at <bold>4</bold> ETH</span> </li> */}
                 {/* <li className="participant">

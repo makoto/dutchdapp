@@ -32,7 +32,9 @@ class Ticket extends Component {
   }
 
   afterOpenModal() {
-    this.subtitle.style.color = '#f00';
+    this.subtitle.style.color = 'black';
+    this.subtitle.style.backgroundColor = 'white';
+    // this.subtitle.style.width = '300px';
   }
 
   closeModal() {

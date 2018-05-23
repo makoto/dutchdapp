@@ -49,6 +49,8 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "openzeppelin-zos": "^1.9.1",
+    "zos-lib": "^0.1.28"
     "c3": "^0.4.23",
     "drizzle": "^1.1.5",
     "drizzle-react": "^1.1.1",

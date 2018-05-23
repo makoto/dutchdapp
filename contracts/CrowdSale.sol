@@ -1,4 +1,5 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.21;
+import "zos-lib/contracts/migrations/Migratable.sol";
 
 contract CrowdSale {
     string public title;
@@ -33,9 +34,8 @@ contract CrowdSale {
     event Finalised();
     event Canceled();
     event Withdrawn(string name, address account, uint amount);
-  // Given start_price is $120, target_price is $60, capacity is 10, and threashold 
 
-  constructor(address ownerAddress, string _title, string _location, string _ownerName, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
+  fuction initialize(address ownerAddress, string _title, string _location, string _ownerName, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) isInitializer("CrowdSale", "0") public {
     require(_startPrice > _targetPrice);
     require(_cap > _threshold);
     title = _title;

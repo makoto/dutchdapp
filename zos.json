@@ -1,0 +1,7 @@
+{
+  "name": "dutchdapp",
+  "version": "0.1.0",
+  "contracts": {
+    "CrowdSale": "CrowdSale"
+  }
+}

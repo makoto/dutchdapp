@@ -2,6 +2,7 @@ var CrowdSale = artifacts.require("./CrowdSale.sol");
 
 contract('CrowdSale', function(accounts) {
   let owner = accounts[0];
+  let ownerName = '@pitbull';
   let sale;
   let title = 'Nice event';
   let location = 'London';
@@ -35,7 +36,7 @@ contract('CrowdSale', function(accounts) {
 
   describe('buying', function(){
     beforeEach(async function(){
-      sale = await CrowdSale.new(owner, title, location, startTime, endTime, 120, 60, 10, 4, {from:owner});
+      sale = await CrowdSale.new(owner, title, location, ownerName, startTime, endTime, 120, 60, 10, 4, {from:owner});
     })
   
     it("sets config", async function() {
@@ -71,7 +72,7 @@ contract('CrowdSale', function(accounts) {
     let startPrice = 120;
     let user = accounts[1];
     it("shows the state", async function() {
-      sale = await CrowdSale.new(owner, title, location, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
+      sale = await CrowdSale.new(owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
       assert.equal(await sale.getParticipantStatus.call(user), 0);
       assert.equal(await assertPurchase(1, 120, 120), true);
       assert.equal(await sale.getParticipantStatus.call(user), 1);
@@ -87,7 +88,7 @@ contract('CrowdSale', function(accounts) {
     let beforeBalance = [];
     let afterBalance = [];
     beforeEach(async function(){
-      sale = await CrowdSale.new(owner, title, location, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
+      sale = await CrowdSale.new(owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
       assert.equal(await assertPurchase(1, 120, 120), true);
       assert.equal(await assertPurchase(2, 120, 110), true);
       assert.equal(await assertPurchase(3, 110, 100), true);

@@ -120,6 +120,7 @@ class CrowdSale extends Component {
             <h2>Action</h2>
             {action}
             <h2>Activity</h2>
+
             {/* <ul className="activity">
               <li className="participant owner">
                 <img className="avatar" src="https://avatars.io/twitter/@pitbull" />
@@ -167,11 +168,20 @@ class CrowdSale extends Component {
                           <li className="participant owner" >
                           <img className="avatar" src={`https://avatars.io/twitter/${owner_name}`}></img>
                               <a href={`https://twitter.com/${owner_name}`}>{owner_name}</a>
-                              <span>  the ticket sale is over! Looking forward to seeing you all!</span>
+                              <span>  the ticket sale is over! 🙏 Looking forward to seeing you all! 🎤</span>
                           </li>      
                         );
                         break;
-                    }
+                      case 'Attended':
+                        activity = (
+                          <li className="participant owner" >
+                          <img className="avatar" src={`https://avatars.io/twitter/${owner_name}`}></img>
+                              <a href={`https://twitter.com/${owner_name}`}>{owner_name}</a>
+                              <span>  Thanks for coming to my gig!! 🚀 🌝	👨‍🚀 . You just got PITBULL token! 🏅‍ </span>
+                          </li>      
+                        );
+                        break;
+                      }
                     return activity;
                   // )
                 })}      

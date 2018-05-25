@@ -12,7 +12,7 @@ const drizzleOptions = {
     CrowdSale
   ],
   events: {
-    CrowdSale: ['Bought', 'Finalised', 'Canceled', 'Withdrawn'],
+    CrowdSale: ['Bought', 'Finalised', 'Canceled', 'Withdrawn', 'Attended'],
   },
   polls: {
     accounts: 1500

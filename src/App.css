@@ -94,7 +94,11 @@ iframe, svg{
 .activity a{ color:black;}
 
 .owner, .owner *{
-  background-color: #ffd27f;
+  background-color: #4CAF50;
+}
+
+.token, .token *{
+  background-color: #4CAF50f;
 }
 
 .container {

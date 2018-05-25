@@ -127,7 +127,7 @@ contract('CrowdSale', function(accounts) {
     // Cannot withdraw twice.
   })
 
-  describe.only("attending", function(){
+  describe("attending", function(){
     let startPrice = 120;
     let beforeBalance = [];
     let afterBalance = [];

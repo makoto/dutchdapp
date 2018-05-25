@@ -29,7 +29,9 @@ The traditional pricing model (early bird/slashing) are based on information asy
 
 ## Running the simulation script.
 
+
 ```truffle exec script/seed.js```
+```truffle exec script/attend.js```
 
 ## NOTES
 
@@ -41,6 +43,8 @@ Due to bugs in drizzle, it has a problem showing activities on right bottom side
 - [Drizzle](https://github.com/trufflesuite/drizzle)
 - [Truffle](http://truffleframework.com)
 - [c3.js](http://c3js.org)
+- [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-solidity)
+- [ZeppelinOS](https://zeppelinos.org/)
 
 ## Other materials.
 

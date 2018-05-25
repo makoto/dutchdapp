@@ -1,9 +1,11 @@
 var CrowdSale = artifacts.require("./CrowdSale.sol");
+var Token = artifacts.require("./MyToken.sol");
 
 contract('CrowdSale', function(accounts) {
   let owner = accounts[0];
   let ownerName = '@pitbull';
   let sale;
+  let token;
   let title = 'Nice event';
   let location = 'London';
   let startTime = Date.now();
@@ -36,7 +38,8 @@ contract('CrowdSale', function(accounts) {
 
   describe('buying', function(){
     beforeEach(async function(){
-      sale = await CrowdSale.new(owner, title, location, ownerName, startTime, endTime, 120, 60, 10, 4, {from:owner});
+      token = await Token.new();
+      sale = await CrowdSale.new(token.address, owner, title, location, ownerName, startTime, endTime, 120, 60, 10, 4, {from:owner});
     })
   
     it("sets config", async function() {
@@ -72,7 +75,8 @@ contract('CrowdSale', function(accounts) {
     let startPrice = 120;
     let user = accounts[1];
     it("shows the state", async function() {
-      sale = await CrowdSale.new(owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
+      token = await Token.new();
+      sale = await CrowdSale.new(token.address, owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
       assert.equal(await sale.getParticipantStatus.call(user), 0);
       assert.equal(await assertPurchase(1, 120, 120), true);
       assert.equal(await sale.getParticipantStatus.call(user), 1);
@@ -88,7 +92,8 @@ contract('CrowdSale', function(accounts) {
     let beforeBalance = [];
     let afterBalance = [];
     beforeEach(async function(){
-      sale = await CrowdSale.new(owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
+      token = await Token.new();
+      sale = await CrowdSale.new(token.address, owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
       assert.equal(await assertPurchase(1, 120, 120), true);
       assert.equal(await assertPurchase(2, 120, 110), true);
       assert.equal(await assertPurchase(3, 110, 100), true);
@@ -120,6 +125,27 @@ contract('CrowdSale', function(accounts) {
     // Non admin cannot cancel
     // Cannot buy after ended.
     // Cannot withdraw twice.
+  })
+
+  describe.only("attending", function(){
+    let startPrice = 120;
+    let beforeBalance = [];
+    let afterBalance = [];
+    beforeEach(async function(){
+      token = await Token.new();
+      sale = await CrowdSale.new(token.address, owner, title, location, ownerName, startTime, endTime, startPrice, 100, 4, 2, {from:owner});
+      assert.equal(await assertPurchase(1, 120, 120), true);
+      await sale.finalize({from:owner});
+      assert.equal((await sale.end.call()), true);
+      assert.equal((await sale.stage.call()), 1);
+      assert.equal(await assertWithdraw(1, 120, 0), true);
+    });
+
+    it("can get an event token", async function() {
+      await sale.attend(accounts[1], {from:owner});
+      let result = await token.ownerOf.call(1);
+      assert.equal(result, accounts[1]);
+    })
   })
 });
 

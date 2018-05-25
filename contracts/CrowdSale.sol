@@ -1,4 +1,5 @@
 pragma solidity ^0.4.18;
+import "./MyToken.sol";
 
 contract CrowdSale {
     string public title;
@@ -11,12 +12,14 @@ contract CrowdSale {
     uint public cap;
     uint public threshold;
     bool public end = false;
+    MyToken public token;
     address public owner;
     mapping (address => Participant) public participants;
     address[] participantsIndex;
     Stages public stage;
 
     struct Participant{
+        uint tokenId;
         string name;
         address buyerAddress;
         uint price;
@@ -33,11 +36,13 @@ contract CrowdSale {
     event Finalised();
     event Canceled();
     event Withdrawn(string name, address account, uint amount);
+    event Attended(string name, address account, uint tokenId);
   // Given start_price is $120, target_price is $60, capacity is 10, and threashold 
 
-  constructor(address ownerAddress, string _title, string _location, string _ownerName, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
+  constructor(MyToken _token, address ownerAddress, string _title, string _location, string _ownerName, uint _startTime, uint _endTime, uint _startPrice, uint _targetPrice, uint _cap, uint _threshold) public {
     require(_startPrice > _targetPrice);
     require(_cap > _threshold);
+    token = _token;
     title = _title;
     location = _location;
     ownerName = _ownerName;
@@ -62,7 +67,7 @@ contract CrowdSale {
     uint deposit = getPriceFor(participantsIndex.length + 1);
     require(deposit == msg.value);
     participantsIndex.push(msg.sender);
-    participants[msg.sender] = Participant(name, msg.sender, deposit, deposit);
+    participants[msg.sender] = Participant(participantsIndex.length, name, msg.sender, deposit, deposit);
     emit Bought(name, deposit);
   }
 
@@ -88,6 +93,14 @@ contract CrowdSale {
     participant.balance = 0;
     participant.buyerAddress.transfer(amount);
     emit Withdrawn(participant.name, participant.buyerAddress, amount);
+  }
+
+  function attend(address participantAddress) public{
+    require(msg.sender == owner);
+    Participant participant = participants[participantAddress];
+    require(participant.buyerAddress != address(0));
+    token.mint(participant.buyerAddress, participant.tokenId);
+    emit Attended(token.name(), participant.buyerAddress, participant.tokenId);
   }
 
   function cancel() public {
